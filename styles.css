@@ -1,0 +1,509 @@
+/* ==========================================
+   Telegram Mini App - Analytics Dashboard
+   Mobile-first, Telegram Theme Integration
+   ========================================== */
+
+:root {
+    /* Telegram Theme Colors - will be overridden by Telegram */
+    --tg-theme-bg-color: #1c1c1e;
+    --tg-theme-text-color: #ffffff;
+    --tg-theme-hint-color: rgba(255, 255, 255, 0.5);
+    --tg-theme-link-color: #5ac8fa;
+    --tg-theme-button-color: #5856d6;
+    --tg-theme-button-text-color: #ffffff;
+    --tg-theme-secondary-bg-color: #2c2c2e;
+
+    /* Gradients */
+    --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-blue: linear-gradient(135deg, #0a84ff 0%, #5856d6 100%);
+    --gradient-green: linear-gradient(135deg, #30d158 0%, #34c759 100%);
+    --gradient-orange: linear-gradient(135deg, #ff9f0a 0%, #ff6b6b 100%);
+
+    /* Accent Colors */
+    --accent-green: #30d158;
+    --accent-red: #ff453a;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    /* Safe area for notch devices */
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    padding-top: var(--safe-area-top);
+    padding-bottom: calc(var(--safe-area-bottom) + 70px);
+}
+
+/* App Container */
+.app-container {
+    min-height: 100%;
+    padding-bottom: 80px;
+}
+
+/* Header */
+.tg-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--tg-theme-bg-color);
+    padding: var(--spacing-lg);
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Tab Navigation */
+.tab-nav {
+    display: flex;
+    background: var(--tg-theme-secondary-bg-color);
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
+    position: sticky;
+    top: 56px;
+    z-index: 99;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tab-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--tg-theme-hint-color);
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.tab-btn.active {
+    background: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+}
+
+/* Content Sections */
+.content-section {
+    padding: var(--spacing-lg);
+    animation: fadeIn 0.3s ease;
+}
+
+.content-section.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-card {
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.stat-card.gradient-purple::before {
+    background: var(--gradient-purple);
+}
+
+.stat-card.gradient-blue::before {
+    background: var(--gradient-blue);
+}
+
+.stat-card.gradient-green::before {
+    background: var(--gradient-green);
+}
+
+.stat-card.gradient-orange::before {
+    background: var(--gradient-orange);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--tg-theme-hint-color);
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Chart Card */
+.chart-card {
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.chart-header h3 {
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.chart-container {
+    height: 180px;
+    position: relative;
+}
+
+/* Data Cards */
+.data-card {
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.data-header h3 {
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.data-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.data-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+}
+
+.data-rank {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.data-rank.gold {
+    background: linear-gradient(135deg, #ffd700, #ffb700);
+    color: #000;
+}
+
+.data-rank.silver {
+    background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+    color: #000;
+}
+
+.data-rank.bronze {
+    background: linear-gradient(135deg, #cd7f32, #b8860b);
+    color: #000;
+}
+
+.data-rank.default {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--tg-theme-hint-color);
+}
+
+.data-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.data-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.data-meta {
+    font-size: 0.7rem;
+    color: var(--tg-theme-hint-color);
+}
+
+.data-value {
+    font-weight: 600;
+    color: var(--accent-green);
+    font-size: 0.85rem;
+}
+
+/* Search */
+.search-container {
+    margin-bottom: var(--spacing-lg);
+}
+
+.search-container input {
+    width: 100%;
+    background: var(--tg-theme-secondary-bg-color);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: var(--tg-theme-text-color);
+    font-size: 0.9rem;
+}
+
+.search-container input::placeholder {
+    color: var(--tg-theme-hint-color);
+}
+
+.search-container input:focus {
+    outline: 2px solid var(--tg-theme-button-color);
+}
+
+/* Products List */
+.products-list,
+.agents-list,
+.clients-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.product-item,
+.agent-item,
+.client-item {
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+}
+
+.product-item .name,
+.agent-item .name,
+.client-item .name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.product-item .category {
+    font-size: 0.75rem;
+    color: var(--tg-theme-hint-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.stat-mini {
+    text-align: center;
+}
+
+.stat-mini .label {
+    font-size: 0.65rem;
+    color: var(--tg-theme-hint-color);
+    display: block;
+}
+
+.stat-mini .value {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.stat-mini .value.positive {
+    color: var(--accent-green);
+}
+
+.stat-mini .value.negative {
+    color: var(--accent-red);
+}
+
+/* Upload Button */
+.upload-container {
+    position: fixed;
+    bottom: var(--safe-area-bottom);
+    left: 0;
+    right: 0;
+    padding: var(--spacing-lg);
+    background: linear-gradient(to top, var(--tg-theme-bg-color) 80%, transparent);
+    z-index: 100;
+}
+
+.upload-btn {
+    width: 100%;
+    padding: var(--spacing-lg);
+    background: var(--tg-theme-button-color);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--tg-theme-button-text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.upload-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+/* Loading State */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    gap: var(--spacing-lg);
+}
+
+.loading-state.hidden {
+    display: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--tg-theme-button-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-state p {
+    color: var(--tg-theme-hint-color);
+    font-size: 0.85rem;
+}
+
+/* Text colors */
+.text-green {
+    color: var(--accent-green);
+}
+
+.text-red {
+    color: var(--accent-red);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+/* Haptic feedback simulation */
+@keyframes haptic {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.98);
+    }
+}
+
+.haptic {
+    animation: haptic 0.1s ease;
+}
